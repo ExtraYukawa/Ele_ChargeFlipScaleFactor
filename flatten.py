@@ -130,8 +130,8 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
     SS_hists_name.append("ttc_isHEM")
     histos_bins["OPS_isHEM"] = [4,0,4]
     histos_bins["ttc_isHEM"] = [4,0,4]
-    #OS_filters += " && !(OPS_isHEM==1)"
-    #SS_filters += " && !(ttc_isHEM==1)"
+    OS_filters += " && !(OPS_isHEM==1)"
+    SS_filters += " && !(ttc_isHEM==1)"
 
   # Basic flatten process
 
