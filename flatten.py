@@ -17,6 +17,9 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
 #############
 ##  BASIC  ##
 #############
+
+  if(era == '2016'):
+    era = '2016postapv' # convention
  
   TTC_header_path = os.path.join("scripts/TTC_" + era + ".h")
   ROOT.gInterpreter.Declare('#include "{}"'.format(TTC_header_path))
@@ -25,8 +28,12 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
     path = '/eos/cms/store/group/phys_top/ExtraYukawa/TTC_version9/'
   elif(era == '2018'):
     path = '/eos/cms/store/group/phys_top/ExtraYukawa/2018/'
+  elif(era == '2016postapv'):
+    path = '/eos/cms/store/group/phys_top/ExtraYukawa/2016postapvMerged/'
+  elif(era == '2016apv'):
+    path = '/eos/cms/store/group/phys_top/ExtraYukawa/2016apvMerged/'
   else:
-    print("You must select 2017/2018. Now set default to 2017.")
+    print("You must select 2016postapv/2016apv/2017/2018. Now set default to 2017.")
     path='/eos/cms/store/group/phys_top/ExtraYukawa/TTC_version9/'
   
   outdir = 'validation/' if (region == 'validation') else 'flatten/'
@@ -99,7 +106,8 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
 
   else:
     if isMC:
-      OS_filters="OPS_region==3 && OPS_2P0F && OPS_z_mass>%f && OPS_z_mass<%f && MET_T1Smear_pt < 50 && n_tight_jet < 3 && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_BadPFMuonFilter && OPS_l1_pt>20 && OPS_l2_pt>20 && abs(OPS_l1_eta)<2.4 && abs(OPS_l2_eta)<2.4 && nHad_tau==0"%((OS_Zmass-OS_width),(OS_Zmass+OS_width)) 
+      #OS_filters="OPS_region==3 && OPS_2P0F && OPS_z_mass>%f && OPS_z_mass<%f && MET_T1Smear_pt < 50 && n_tight_jet < 3 && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_BadPFMuonFilter && OPS_l1_pt>20 && OPS_l2_pt>20 && abs(OPS_l1_eta)<2.4 && abs(OPS_l2_eta)<2.4 && nHad_tau==0"%((OS_Zmass-OS_width),(OS_Zmass+OS_width)) 
+      OS_filters="OPS_region==3"
     #OS_filters="OPS_region==3 && OPS_2P0F && OPS_z_mass>60 && OPS_z_mass<120 && OPS_l1_pt>30 && OPS_l2_pt>20 && OPS_drll>0.3 && Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter && Flag_ecalBadCalibFilter && nHad_tau==0&& abs(OPS_l1_eta)<2.4 && abs(OPS_l2_eta)<2.4"
       SS_filters="ttc_region==3 && ttc_2P0F && ttc_mll>%f && ttc_mll<%f && MET_T1Smear_pt < 50 && n_tight_jet <3 && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_BadPFMuonFilter && ttc_l1_pt>20 && ttc_l2_pt>20 && abs(ttc_l1_eta)<2.4 && abs(ttc_l2_eta)<2.4&& nHad_tau==0"%((SS_Zmass-SS_width),(SS_Zmass+SS_width))
     else:
@@ -130,8 +138,8 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
     SS_hists_name.append("ttc_isHEM")
     histos_bins["OPS_isHEM"] = [4,0,4]
     histos_bins["ttc_isHEM"] = [4,0,4]
-    #OS_filters += " && !(OPS_isHEM==1)"
-    #SS_filters += " && !(ttc_isHEM==1)"
+    OS_filters += " && !(OPS_isHEM==1)"
+    SS_filters += " && !(ttc_isHEM==1)"
 
   # Basic flatten process
 
@@ -140,9 +148,12 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
     df_SS_tree = select_MC_event(df_SS, add_trigger_SF, cfsf, shift, SS_filters, 0, era, fin)
 
     for i in OS_hists_name:
+      print(i)
       df_histo = df_OS_tree.Histo1D(('OS_'+i,'',histos_bins[i][0],histos_bins[i][1],histos_bins[i][2]), i,'genweight')
+      print(df_histo)
       histos.append(df_histo.GetValue().Clone())
     for i in SS_hists_name:
+      print(i)
       df_histo = df_SS_tree.Histo1D(('SS_'+i,'',histos_bins[i][0],histos_bins[i][1],histos_bins[i][2]), i,'genweight')
       histos.append(df_histo.GetValue().Clone())
 
@@ -152,19 +163,21 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
     df_OS_tree = df_OS_tree.Define("OPS_kinematic_region","kinematic(OPS_l1_pt, OPS_l2_pt, OPS_l1_eta, OPS_l2_eta)")
     df_SS_tree = df_SS_tree.Define("ttc_kinematic_region","kinematic(ttc_l1_pt, ttc_l2_pt, ttc_l1_eta, ttc_l2_eta)")
     if "DoubleEG" in fin:
-      df_OS_tree = for_diele_trigger(df_OS_tree)
-      df_SS_tree = for_diele_trigger(df_SS_tree)
+      df_OS_tree = for_diele_trigger(df_OS_tree, era)
+      df_SS_tree = for_diele_trigger(df_SS_tree, era)
     elif "SingleEG" in fin:
-      df_OS_tree = for_singleele_trigger_eechannel(df_OS_tree)
-      df_SS_tree = for_singleele_trigger_eechannel(df_SS_tree)
+      df_OS_tree = for_singleele_trigger_eechannel(df_OS_tree, era)
+      df_SS_tree = for_singleele_trigger_eechannel(df_SS_tree, era)
     elif "EGamma" in fin:
-      df_OS_tree = for_egamma_trigger_eechannel(df_OS_tree)
-      df_SS_tree = for_egamma_trigger_eechannel(df_SS_tree)
+      df_OS_tree = for_egamma_trigger_eechannel(df_OS_tree, era)
+      df_SS_tree = for_egamma_trigger_eechannel(df_SS_tree, era)
 
     for i in OS_hists_name:
+      print(i)
       df_data_histo = df_OS_tree.Histo1D(('OS_'+i,'',histos_bins[i][0],histos_bins[i][1],histos_bins[i][2]), i)
       histos.append(df_data_histo)
     for i in SS_hists_name:
+      print(i)
       df_data_histo = df_SS_tree.Histo1D(('SS_'+i,'',histos_bins[i][0],histos_bins[i][1],histos_bins[i][2]), i)
       histos.append(df_data_histo)
   if len(histos)==0:
@@ -201,7 +214,7 @@ if __name__ == "__main__":
   parser = optparse.OptionParser(usage)
   parser.add_option('-e','--era', dest='era', help='era: [2017/2018]', default='2017', type='string')
   parser.add_option('-m','--isMC',dest='isMC',help='isMC = [0/1]',  default = 1, type=int)
-  parser.add_option('-i','--fin', dest='fin', help='input file', default = 'tttt.root', type='string') 
+  parser.add_option('-i','--fin', dest='fin', help='input file', default = 'ttH.root', type='string') 
   parser.add_option('-x','--xsec',dest='xsec',help='x section',  default = 1,    type=float)
   parser.add_option('-t','--trig',dest='trig',help='Add trigger SF or not', default = 0, type=int)
   parser.add_option('-c','--cfsf',dest='cfsf',help='Add chargeflip SF or not', default =1, type=int)
