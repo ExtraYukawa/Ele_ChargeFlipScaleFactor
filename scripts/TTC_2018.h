@@ -21,7 +21,7 @@ TH2D*h2_em=(TH2D*)f->Get("h2D_SF_emu_lep2pteta");
 
 TFile*f_cf=TFile::Open("data/ChargeFlipSF_" + era + "_MLE.root");
 TH2F*h_OS=(TH2F*)f_cf->Get("OS_ChargeFlip_SF");
-TH2F*h_SS  =(TH2F*)f_cf->Get("SS_ChargeFlip_SF_sys");
+TH2F*h_SS  =(TH2F*)f_cf->Get("SS_ChargeFlip_SF_AllUnc");
 
 TFile*f_cfregion=TFile::Open("data/ChargeFlipProbability_" + era + "_MLE.root");
 TH2F*h_data = (TH2F*) f_cfregion->Get("data_CFRate");
