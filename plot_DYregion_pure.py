@@ -1,6 +1,9 @@
 import ROOT
 import numpy as np
+import os
 from ROOT import kFALSE
+import json
+from collections import OrderedDict
 
 import CMSTDRStyle
 CMSTDRStyle.setTDRStyle().cd()
@@ -32,96 +35,80 @@ def set_axis(the_histo, coordinate, title, is_energy):
 	else:
 		axis.SetTitle(title) 
 
+def add_process(h, histos, h_index, color, lumi, isMC):
+  if len(h_index) == 0:
+    print("Do not have this sample.")
+  print(h_index)
+  print(histos)
+  print(len(histos))
+  histos[h_index[0]]
+  h = histos[h_index[0]].Clone()
+  if len(h_index) > 1:
+    for i in range(1,len(h_index)):
+      h.Add(histos[h_index[i]])
+  if isMC:
+    h.SetFillColor(color)
+    h.Scale(lumi)
+  else:
+    h.SetMarkerStyle(20)
+    h.SetMarkerSize(0.85)
+    h.SetMarkerColor(1)
+    h.SetLineWidth(1)
+  return h
+
 def draw_plots(hist_array =[], draw_data=0, x_name='', isem=0, era = '2017'):
       
-        plotdir = '/eos/user/t/tihsu/plot/Ele_chargeflip_sf/' + era + '/'
+        plotdir = '/eos/user/t/tihsu/plot/Ele_chargeflip_sf_eratrig/' + era + '/' + 'validation/'
+        os.system('mkdir -p ' + plotdir)
 
         lumi = 0.
         if(era == '2017'):
           lumi = 41480.
         elif(era == '2018'):
           lumi = 59830.
-        elif(era == '2016'):
+        elif(era == '2016postapv'):
           lumi = 16810.
         elif(era == '2016apv'):
           lumi = 19520.
 
-	DY = hist_array[0].Clone()
-	DY.SetFillColor(ROOT.kRed)
-	DY.Scale(lumi)
+        jsonfile = open(os.path.join('data/sample_' + era + 'UL.json'))
+        samples = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
+        jsonfile.close()
 
-	WJet = hist_array[1].Clone()
-	WJet.SetFillColor(ROOT.kBlue-7)
-	WJet.Scale(lumi)
+        d = dict()
+        index = 0
+        for process, desc in samples:
+          if desc[2] not in d:
+            d[desc[2]] = []
+          else:
+            pass
+          d[desc[2]].append(index)
+          index += 1
+        print(d)
+   
+        DY = None
+        WJet = None
+        VV = None
+        VVV = None
+        SingleTop = None
+        ttXorXX = None
+        tzq = None
+        TT  = None
+        Data = None
 
-	VV = hist_array[2].Clone()
-	VV.Add(hist_array[3])
-	VV.Add(hist_array[4])
-	VV.Add(hist_array[5])
-	VV.Add(hist_array[6])
-	VV.Add(hist_array[7])
-	VV.Add(hist_array[8])
-	VV.SetFillColor(ROOT.kCyan-7)
-	VV.Scale(lumi)
-
-	VVV = hist_array[9].Clone()
-	VVV.Add(hist_array[10])
-	VVV.Add(hist_array[11])
-	VVV.Add(hist_array[12])
-	VVV.SetFillColor(ROOT.kSpring-9)
-	VVV.Scale(lumi)
-
-	SingleTop = hist_array[13].Clone()
-	SingleTop.Add(hist_array[14])
-	SingleTop.Add(hist_array[15])
-	SingleTop.Add(hist_array[16])
-	SingleTop.Add(hist_array[17])
-	SingleTop.SetFillColor(ROOT.kGray)
-	SingleTop.Scale(lumi)
-
-	ttXorXX = hist_array[18].Clone()
-	ttXorXX.Add(hist_array[19])
-	ttXorXX.Add(hist_array[20])
-	ttXorXX.Add(hist_array[21])
-	ttXorXX.Add(hist_array[22])
-	ttXorXX.Add(hist_array[23])
-	ttXorXX.Add(hist_array[24])
-	ttXorXX.Add(hist_array[25])
-	ttXorXX.Add(hist_array[26])
-	ttXorXX.Add(hist_array[27])
-	ttXorXX.Add(hist_array[28])
-	ttXorXX.Add(hist_array[29])
-	ttXorXX.Add(hist_array[30])
-	ttXorXX.SetFillColor(ROOT.kViolet-4)
-	ttXorXX.Scale(lumi)
-
-	tzq = hist_array[31].Clone()
-	tzq.SetFillColor(ROOT.kYellow-4)
-	tzq.Scale(lumi)
-
-#	QCD = hist_array[23].Clone()
-#	QCD.Add(hist_array[24])
-#	QCD.Add(hist_array[25])
-#	QCD.Add(hist_array[26])
-#	QCD.Add(hist_array[27])
-#	QCD.SetFillColor(ROOT.kOrange+1)
-#	QCD.Scale(lumi)
-
-	TT = hist_array[32].Clone()
-	TT.Add(hist_array[33])
-	TT.SetFillColor(ROOT.kBlue)
-	TT.Scale(lumi)
-
-	Data = hist_array[34].Clone()
-        if not (era=='2018'):
-          Data.Add(hist_array[35])
+        DY        = add_process(DY,        hist_array, d['DY'],        ROOT.kRed,      lumi, 1)
+        WJet      = add_process(WJet,      hist_array, d['WJet'],      ROOT.kBlue-7,   lumi, 1)
+        VV        = add_process(VV,        hist_array, d['VV'],        ROOT.kCyan-7,   lumi, 1)
+        VVV       = add_process(VVV,       hist_array, d['VVV'],       ROOT.kSpring-9, lumi, 1)
+	SingleTop = add_process(SingleTop, hist_array, d['SingleTop'], ROOT.kGray,     lumi, 1)
+        ttXorXX   = add_process(ttXorXX,   hist_array, d['ttXorXX'],   ROOT.kViolet-4, lumi, 1)
+        tzq       = add_process(tzq,       hist_array, d['tzq'],       ROOT.kYellow-4, lumi, 1)
+	TT        = add_process(TT,        hist_array, d['TT'],        ROOT.kBlue,     lumi, 1)
+        Data      = add_process(Data,      hist_array, d['data'],      ROOT.kBlack,    lumi, 0)
+       
 	if isem==1:
 		Data.Add(hist_array[36])#if emu channel
 	if not draw_data: Data.Reset('ICE')
-	Data.SetMarkerStyle(20)
-	Data.SetMarkerSize(0.85)
-	Data.SetMarkerColor(1)
-	Data.SetLineWidth(1)
 
 	h_stack = ROOT.THStack()
 	h_stack.Add(DY)
@@ -266,6 +253,10 @@ def draw_plots(hist_array =[], draw_data=0, x_name='', isem=0, era = '2017'):
 	c.Update()
 	c.SaveAs(plotdir + x_name+'.pdf')
 	c.SaveAs(plotdir + x_name+'.png')
+        pad1.cd()
+        pad1.SetLogy()
+        c.Update()
+        c.SaveAs(plotdir + x_name + '_log.png')
 #	c.SaveAs(x_name+'.root')
 	return c
 	pad1.Close()

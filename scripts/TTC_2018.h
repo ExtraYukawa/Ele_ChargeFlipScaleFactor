@@ -21,13 +21,13 @@ TH2D*h2_em=(TH2D*)f->Get("h2D_SF_emu_lep2pteta");
 
 TFile*f_cf=TFile::Open("data/ChargeFlipSF_" + era + "_MLE.root");
 TH2F*h_OS=(TH2F*)f_cf->Get("OS_ChargeFlip_SF");
-TH2F*h_SS  =(TH2F*)f_cf->Get("SS_ChargeFlip_SF_sys");
+TH2F*h_SS  =(TH2F*)f_cf->Get("SS_ChargeFlip_SF_AllUnc");
 
 TFile*f_cfregion=TFile::Open("data/ChargeFlipProbability_" + era + "_MLE.root");
 TH2F*h_data = (TH2F*) f_cfregion->Get("data_CFRate");
 
 TFile*fele=TFile::Open("data/EleIDSF_" + era + ".root");
-TH2D*h_eleSF=(TH2D*)fele->Get("EleIDDataEff");
+TH2D*h_eleSF=(TH2D*)fele->Get("EleIDSF");
 
 //srand(12345);
 
@@ -65,7 +65,7 @@ float trigger_sf_em(float l1_pt, float l2_pt, float l1_eta, float l2_eta){
 
 int kinematic(float l1_pt, float l2_pt, float l1_eta, float l2_eta){
   std::vector<Float_t> pt_region  = {20., 40., 60., 100., 100000000000.};
-  std::vector<Float_t> eta_region = {0.,  0.8, 1.479, 2.4};
+  std::vector<Float_t> eta_region = {0.,  0.8, 1.479, 2.5};
   int pt_bins  = pt_region.size() - 1;
   int eta_bins = eta_region.size() - 1;
   int l1_pt_index = -1;
@@ -123,7 +123,7 @@ int isHEM(int run, ROOT::VecOps::RVec<float> Jet_pt, ROOT::VecOps::RVec<Float_t>
     }
   }
   else{
-    float probability = rand()/(float)RAND_MAX;
+    float probability = (float)rand()/(float)RAND_MAX;
     if(probability < 0.648189){
       if(HEM == 2){
         HEM = 1; 
@@ -133,3 +133,15 @@ int isHEM(int run, ROOT::VecOps::RVec<float> Jet_pt, ROOT::VecOps::RVec<Float_t>
   }  
   return HEM;
 }
+bool Triggers(int run, bool triggers, std::vector<int> vec){
+    if(!triggers || vec.at(0) == -1 ){
+        return triggers;
+    }
+    for(auto v : vec){
+        if(run == v){
+            return triggers;
+        }
+    }
+    return false;
+}
+

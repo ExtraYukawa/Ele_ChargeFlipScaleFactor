@@ -30,7 +30,7 @@ def TTC_Analysis(era):
     lumi = 41480.
   elif(era == '2018'):
     lumi = 59830.
-  elif(era == '2016'):
+  elif(era == '2016postapv'):
     lumi = 16810.
   elif(era == '2016apv'):
     lumi = 19520.
@@ -93,6 +93,7 @@ def TTC_Analysis(era):
 if __name__ == "__main__":
   start = time.time()
   start1 = time.clock() 
+#  Eras = ['2016apv','2016postapv','2017','2018']
   Eras = ['2017','2018']
   for era in Eras:
     TTC_Analysis(era)

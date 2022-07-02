@@ -17,7 +17,7 @@
   "tsch":    [3.36,    1, "SingleTop",920],
   "t_tch":   [136.02,  1, "SingleTop",920],
   "tbar_tch":[80.95,   1, "SingleTop",920],
-  "ttH":     [0.5269,  1, "ttXorXX",  876],
+  "ttH":     [0.5638,  1, "ttXorXX",  876],
   "ttWtoLNu":[0.1792,  1, "ttXorXX",  876],
   "ttWtoQQ": [0.3708,  1, "ttXorXX",  876],
   "ttZ":     [0.2589,  1, "ttXorXX",  876],
@@ -31,8 +31,8 @@
   "tttW":    [0.00073, 1, "ttXorXX",  876],
   "tttt":    [0.0082,  1, "ttXorXX",  876],
   "tzq":     [0.07561, 1, "tzq",      396],
-  "TTTo2L":  [88.3419, 1, "TT",       600],
-  "TTTo1L":  [365.4574,1, "TT",       600],
+  "TTTo2L":  [88.29, 1, "TT",       600],
+  "TTTo1L":  [365.34,1, "TT",       600],
   "DoubleEG":   [1,    0, "data"   ,  0],
   "SingleEG":   [1,    0, "data"   ,  0]
 }

@@ -12,7 +12,7 @@ def fit(era, h_sig_OS, h_sig_SS, h_back_OS, h_back_SS, h_data_OS, h_data_SS, pt_
   print("back_OS: %f"%h_back_OS.Integral())
   print("back_SS: %f"%h_back_SS.Integral())
 
-  plotdir = '/eos/user/t/tihsu/plot/Ele_chargeflip_sf/'
+  plotdir = '/eos/user/t/tihsu/plot/Ele_chargeflip_sf_eratrig/'
   method = 'chi2'
   if(useLikelihood):
     method = 'MLE'

@@ -10,7 +10,7 @@ def prepare_range(path, fin):
   try:
     f_read = ROOT.TFile.Open(path + fin)
     entries = (f_read.Get('Events')).GetEntriesFast()
-    step = 750000
+    step = 500000
     init = 0
     index = []
     while(init < entries):
@@ -22,7 +22,7 @@ def prepare_range(path, fin):
   except:
     print("%s%s fail to process."%(path,fin))
     return None
-def prepare_shell(region, era, isMC, trig_sf, cfsf, shift, fin, xs, start, end, label, FarmDir,condor):
+def prepare_shell(region, era, isMC, trig_sf, cfsf, shift, fin, xs, start, end, label, FarmDir,condor, process, subprocess):
   cmsswBase = os.environ['CMSSW_BASE']
   shell_name = region + "_" + era + "_" + str(cfsf) + str(shift) + fin + str(label) + ".sh"
   with open('%s/%s'%(FarmDir,shell_name),'w') as shell:
@@ -43,6 +43,8 @@ def prepare_shell(region, era, isMC, trig_sf, cfsf, shift, fin, xs, start, end, 
     shell.write('--from %d '%start)
     shell.write('--to %d '%end)
     shell.write('--label %d '%label)
+    shell.write('--process %s '%process)
+    shell.write('--subprocess %s '%subprocess)
   condor.write('cfgFile=%s\n'%shell_name)
   condor.write('queue 1\n') 
 
@@ -65,7 +67,8 @@ if __name__=='__main__':
   condor.write('+JobFlavour = "tomorrow"\n')
   condor.write('+MaxRuntime = 7200\n')
 
-  Eras = ['2017','2018']
+#  Eras = ['2017','2018']
+  Eras = ['2016apv','2016postapv','2017','2018']
   trigger_sf = 1
 
   chargeflip_sf = []
@@ -74,10 +77,10 @@ if __name__=='__main__':
   region = ''
 
   if args.method == 'I':
-    tag_dir = 'flatten/'
-    region  = 'nominal'
-    directory = ["ApplyChargeFlipsf_Nominal","NotApplyChargeFlipsf_Nominal"]
-    chargeflip_sf = [(1,0),(0,0)]
+    tag_dir = 'validation/'
+    region  = 'validation'
+    directory = ["NotApplyChargeFlipsf_Nominal"]
+    chargeflip_sf = [(0,0)]
 
   elif (args.method == 'II' or args.method == 'V'):
     tag_dir = 'flatten/'
@@ -105,6 +108,10 @@ if __name__=='__main__':
       path = '/eos/cms/store/group/phys_top/ExtraYukawa/TTC_version9/'
     elif(era == '2018'):
       path = '/eos/cms/store/group/phys_top/ExtraYukawa/2018/'
+    elif(era == '2016postapv'):
+      path = '/eos/cms/store/group/phys_top/ExtraYukawa/2016postapvMerged/'
+    elif(era == '2016apv'):
+      path = '/eos/cms/store/group/phys_top/ExtraYukawa/2016apvMerged/'
 
     jsonfile = open(os.path.join('data/sample_' + era + 'UL.json'))
     samples = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
@@ -112,6 +119,8 @@ if __name__=='__main__':
 
 
     for process, desc in samples:
+      #if not desc[2] == "WJet":
+      #  continue
       dirs = os.listdir(path)
       for f in dirs:
         if((desc[1] and process == f.replace('.root','')) or (not desc[1] and process in f)):
@@ -122,7 +131,7 @@ if __name__=='__main__':
             start = range_list[i]
             end = range_list[i+1]
             for cfsf,shift in chargeflip_sf:
-              prepare_shell(region, era,desc[1],trigger_sf,cfsf,shift,f,desc[0],start,end,i, FarmDir,condor)
+              prepare_shell(region, era,desc[1],trigger_sf,cfsf,shift,f,desc[0],start,end,i, FarmDir,condor, desc[2],process)
   condor.close()
   os.system('condor_submit %s/condor.sub'%FarmDir)
 

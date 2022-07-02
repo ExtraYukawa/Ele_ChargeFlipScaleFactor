@@ -32,7 +32,7 @@ def produce_combine_file(era):
        get_hist(era,channel,subtitle,fout)
   fout.Close()
 if __name__ == "__main__":
-  eras = ["2017","2018"]
+  eras = ["2016apv","2016postapv","2017","2018"]
   for era in eras:
     produce_combine_file(era)
 

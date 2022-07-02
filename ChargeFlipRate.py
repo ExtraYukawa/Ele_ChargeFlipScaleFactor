@@ -9,47 +9,24 @@ import ChargeFlip_Fit
 import json
 from ScaleFactor_produce import SF_produce
 
-#histograms name
-OS_hists_name = ['OPS_l1_pt','OPS_l1_eta','OPS_l1_phi','OPS_l2_pt','OPS_l2_eta','OPS_l2_phi','OPS_z_pt','OPS_z_eta','OPS_z_phi','OPS_z_mass','OPS_kinematic_region']
-SS_hists_name = ['ttc_l1_pt','ttc_l1_eta','ttc_l1_phi','ttc_l2_pt','ttc_l2_eta','ttc_l2_phi','ttc_mll','ttc_kinematic_region']
-hists_name = ['OPS_l1_pt','OPS_l1_eta','OPS_l1_phi','OPS_l2_pt','OPS_l2_eta','OPS_l2_phi','OPS_z_pt','OPS_z_eta','OPS_z_phi','OPS_z_mass','OPS_kinematic_region','ttc_l1_pt','ttc_l1_eta','ttc_l1_phi','ttc_l2_pt','ttc_l2_eta','ttc_l2_phi','ttc_mll','ttc_kinematic_region']
-#OS_hists_name = ['OPS_z_mass','OPS_kinematic_region']
-#SS_hists_name = ['ttc_mll', 'ttc_kinematic_region']
-#hists_name = ['OPS_z_mass', 'OPS_kinematic_region', 'ttc_mll', 'ttc_kinematic_region']
-
-def TTC_Analysis(era):
-
-  plotdir = '/eos/user/t/tihsu/plot/Ele_chargeflip_sf/'
-
+def Fill_histogram(h_data_OS,h_data_SS,h_MC_OS,h_MC_SS,h_back_OS,h_back_SS,era,data_list,signal_list,pass_list):
   lumi = 0.
   if(era == '2017'):
     lumi = 41480.
   elif(era == '2018'):
     lumi = 59830.
-  elif(era == '2016'):
+  elif(era == '2016postapv'):
     lumi = 16810.
   elif(era == '2016apv'):
     lumi = 19520.
-
-  signal_list = ['DYnlo','TTTo2L','TTTo1L']
-  data_list = ['DoubleEG','SingleEG','EGamma']
-  pass_list = ['DY']
-
-  h_data_OS = None
-  h_data_SS = None
-  h_MC_OS = None
-  h_MC_SS = None
-  h_back_OS = None
-  h_back_SS = None
-
-  path = 'flatten/era' + era + '/NotApplyChargeFlipsf_Nominal/' 
+  path = 'flatten/era' + era + '/NotApplyChargeFlipsf_Nominal/'
   dirs = os.listdir(path)
   for f in dirs:
     fname = '_'.join(((f.replace('.root','')).split('_'))[1:])
     fin = ROOT.TFile.Open(path + f)
     isdata = False
     for data in data_list:
-      if(data in fname): 
+      if(data in fname):
         isdata = True
     if(fname in pass_list):
       pass
@@ -84,7 +61,7 @@ def TTC_Analysis(era):
       if(h_back_OS is None):
         h_back_OS = (fin.Get('OS_OPS_kinematic_region')).Clone()
         h_back_OS.SetDirectory(ROOT.gROOT)
-        h_back_OS.Scale(lumi)
+        h_back_OS.Scale(lumi) 
       else:
         h = fin.Get('OS_OPS_kinematic_region').Clone()
         h_back_OS.Add(h,lumi)
@@ -96,11 +73,32 @@ def TTC_Analysis(era):
         h = fin.Get('SS_ttc_kinematic_region').Clone()
         h_back_SS.Add(h,lumi)
     fin.Close()
+  return h_data_OS,h_data_SS,h_MC_OS,h_MC_SS,h_back_OS,h_back_SS
+
+def TTC_Analysis(eras):
+
+  era = eras[0]#[:4]
+  plotdir = '/eos/user/t/tihsu/plot/Ele_chargeflip_sf_eratrig/'
+
+  signal_list = ['DYnlo','TTTo2L']
+  data_list = ['DoubleEG','SingleEG','EGamma']
+  pass_list = ['DY']
+
+  h_data_OS = None
+  h_data_SS = None
+  h_MC_OS = None
+  h_MC_SS = None
+  h_back_OS = None
+  h_back_SS = None
+
+  for Era in eras:
+    h_data_OS,h_data_SS,h_MC_OS,h_MC_SS,h_back_OS,h_back_SS = Fill_histogram(h_data_OS,h_data_SS,h_MC_OS,h_MC_SS,h_back_OS,h_back_SS,Era,data_list,signal_list,pass_list)
+
   pt_region  = [20., 40., 60., 100., 300.]
-  eta_region = [0.,  0.8, 1.479, 2.4]
-  h = ChargeFlip_Fit.fit(era, h_MC_OS,h_MC_SS,h_back_OS,h_back_SS,h_data_OS,h_data_SS,pt_region,eta_region,1,1,1)
+  eta_region = [0.,  0.8, 1.479, 2.5]
+  h = ChargeFlip_Fit.fit(era, h_MC_OS,h_MC_SS,h_back_OS,h_back_SS,h_data_OS,h_data_SS,pt_region,eta_region,1,0,1) #useLikelihood, subMC, draw
   SF_nominal = SF_produce(era, h[0], h[1], h[2], h[3], 1, '')
-  h2 = ChargeFlip_Fit.fit(era, h_MC_OS, h_MC_SS, h_back_OS, h_back_SS, h_data_OS, h_data_SS, pt_region, eta_region,1,0,0)
+  h2 = ChargeFlip_Fit.fit(era, h_MC_OS, h_MC_SS, h_back_OS, h_back_SS, h_data_OS, h_data_SS, pt_region, eta_region,1,1,0)
   SF_subMC   = SF_produce(era, h2[0], h2[1], h2[2], h2[3], 0, '_subMC')
   h3 = ChargeFlip_Fit.fit(era, h_MC_OS, h_MC_SS, h_back_OS, h_back_SS, h_data_OS, h_data_SS, pt_region, eta_region,0,1,0)
   SF_chi2    = SF_produce(era, h3[0], h3[1], h3[2], h3[3], 0, '_chi2')
@@ -134,6 +132,8 @@ def TTC_Analysis(era):
     SF_nominal[i].Write()
     SF_subMC[i].Write()
     SF_chi2[i].Write()
+    SF_nominal[i].SetName(tag+"_ChargeFlip_SF_AllUnc")
+    SF_nominal[i].Write()
     
   fout.Close()
   #ChargeFlip_Fit.fit(h_MC_OS,h_MC_SS,h_back_OS,h_back_SS,h_data_OS,h_data_SS,pt_region,eta_region,0)
@@ -141,9 +141,9 @@ def TTC_Analysis(era):
 if __name__ == "__main__":
   start = time.time()
   start1 = time.clock() 
-  Eras = ['2017','2018']
-  for era in Eras:
-    TTC_Analysis(era)
+  Eras = [['2016postapv'],['2016apv'],['2017'],['2018']]
+  for eras in Eras:
+    TTC_Analysis(eras)
   end = time.time()
   end1 = time.clock()
   print "wall time:", end-start

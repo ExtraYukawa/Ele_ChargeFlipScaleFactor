@@ -1,6 +1,9 @@
 from ROOT import *
 
 def SetStyle(gPad, era):
+
+        if(era == '2016postapv'):
+          era = '2016' # To have a more beautiful plot
 	latex = TLatex();
 	latex.SetNDC()
 	l = gPad.GetLeftMargin();

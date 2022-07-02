@@ -1,0 +1,82 @@
+{
+    "DoubleElectron": {
+        "Data": {
+            "B2": {
+                "SingleEG": "!Triggers(run,HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ,{DiLepton_slc_run[\"HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ\"]}) &&Triggers(run,HLT_Ele27_WPTight_Gsf,{DiLepton_slc_run[\"HLT_Ele27_WPTight_Gsf\"]})",
+                "DoubleEG": "Triggers(run,HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ,{DiLepton_slc_run[\"HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ\"]})"
+            },
+            "C": {
+                "SingleEG": "!Triggers(run,HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ,{DiLepton_slc_run[\"HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ\"]}) &&Triggers(run,HLT_Ele27_WPTight_Gsf,{DiLepton_slc_run[\"HLT_Ele27_WPTight_Gsf\"]})",
+                "DoubleEG": "Triggers(run,HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ,{DiLepton_slc_run[\"HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ\"]})"
+            },
+            "D": {
+                "SingleEG": "!Triggers(run,HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ,{DiLepton_slc_run[\"HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ\"]}) &&Triggers(run,HLT_Ele27_WPTight_Gsf,{DiLepton_slc_run[\"HLT_Ele27_WPTight_Gsf\"]})",
+                "DoubleEG": "Triggers(run,HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ,{DiLepton_slc_run[\"HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ\"]})"
+            },
+            "E": {
+                "SingleEG": "!Triggers(run,HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ,{DiLepton_slc_run[\"HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ\"]}) &&Triggers(run,HLT_Ele27_WPTight_Gsf,{DiLepton_slc_run[\"HLT_Ele27_WPTight_Gsf\"]})",
+                "DoubleEG": "Triggers(run,HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ,{DiLepton_slc_run[\"HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ\"]})"
+            },
+            "F": {
+                "SingleEG": "!Triggers(run,HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ,{DiLepton_slc_run[\"HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ\"]}) &&Triggers(run,HLT_Ele27_WPTight_Gsf,{DiLepton_slc_run[\"HLT_Ele27_WPTight_Gsf\"]})",
+                "DoubleEG": "Triggers(run,HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ,{DiLepton_slc_run[\"HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ\"]})"
+            }
+        },
+        "MC": "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ || HLT_Ele27_WPTight_Gsf"
+    },
+    "DoubleMuon": {
+        "Data": {
+            "B2": {
+                "SingleMuon": "!( Triggers(run,HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL\"]}) || Triggers(run,HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL\"]}) ) && Triggers(run,HLT_IsoMu27,{DiLepton_slc_run[\"HLT_IsoMu27\"]})",
+                "DoubleMuon": "Triggers(run,HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL\"]}) || Triggers(run,HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL\"]})"
+            },
+            "C": {
+                "SingleMuon": "!( Triggers(run,HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL\"]}) || Triggers(run,HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL\"]}) ) && Triggers(run,HLT_IsoMu27,{DiLepton_slc_run[\"HLT_IsoMu27\"]})",
+                "DoubleMuon": "Triggers(run,HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL\"]}) || Triggers(run,HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL\"]})"
+            },
+            "D": {
+                "SingleMuon": "!( Triggers(run,HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL\"]}) || Triggers(run,HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL\"]}) ) && Triggers(run,HLT_IsoMu27,{DiLepton_slc_run[\"HLT_IsoMu27\"]})",
+                "DoubleMuon": "Triggers(run,HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL\"]}) || Triggers(run,HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL\"]})"
+            },
+            "E": {
+                "SingleMuon": "!( Triggers(run,HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL\"]}) || Triggers(run,HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL\"]}) ) && Triggers(run,HLT_IsoMu27,{DiLepton_slc_run[\"HLT_IsoMu27\"]})",
+                "DoubleMuon": "Triggers(run,HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL\"]}) || Triggers(run,HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL\"]})"
+            },
+            "F": {
+                "SingleMuon": "!( Triggers(run,HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL\"]}) || Triggers(run,HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL\"]}) ) && Triggers(run,HLT_IsoMu27,{DiLepton_slc_run[\"HLT_IsoMu27\"]})",
+                "DoubleMuon": "Triggers(run,HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL\"]}) || Triggers(run,HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL,{DiLepton_slc_run[\"HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL\"]})"
+            }
+        },
+        "MC": "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL|| HLT_IsoMu27"
+    },
+    "ElectronMuon": {
+        "Data": {
+            "B2": {
+                "SingleEG": "!( Triggers(run,HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL,{DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL, {DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL\"]})) && Triggers( run , HLT_Ele27_WPTight_Gsf,{DiLepton_slc_run[\"HLT_Ele27_WPTight_Gsf\"]})",
+                "SingleMuon": "!( Triggers(run,HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL,{DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL, {DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL\"]}))",
+                "MuonEG": "Triggers(run , HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL , {DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL,{DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run , HLT_IsoTkMu24,{DiLepton_slc_run[\"HLT_IsoTkMu24\"]})"
+            },
+            "C": {
+                "SingleEG": "!( Triggers(run,HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL,{DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL, {DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL\"]})) && Triggers( run , HLT_Ele27_WPTight_Gsf,{DiLepton_slc_run[\"HLT_Ele27_WPTight_Gsf\"]})",
+                "SingleMuon": "!( Triggers(run,HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL,{DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL, {DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL\"]}))",
+                "MuonEG": "Triggers(run , HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL , {DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL,{DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run , HLT_IsoTkMu24,{DiLepton_slc_run[\"HLT_IsoTkMu24\"]})"
+            },
+            "D": {
+                "SingleEG": "!( Triggers(run,HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL,{DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL, {DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL\"]})) && Triggers( run , HLT_Ele27_WPTight_Gsf,{DiLepton_slc_run[\"HLT_Ele27_WPTight_Gsf\"]})",
+                "SingleMuon": "!( Triggers(run,HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL,{DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL, {DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL\"]}))",
+                "MuonEG": "Triggers(run , HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL , {DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL,{DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run , HLT_IsoTkMu24,{DiLepton_slc_run[\"HLT_IsoTkMu24\"]})"
+            },
+            "E": {
+                "SingleEG": "!( Triggers(run,HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL,{DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL, {DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL\"]})) && Triggers( run , HLT_Ele27_WPTight_Gsf,{DiLepton_slc_run[\"HLT_Ele27_WPTight_Gsf\"]})",
+                "SingleMuon": "!( Triggers(run,HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL,{DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL, {DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL\"]}))",
+                "MuonEG": "Triggers(run , HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL , {DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL,{DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL\"]}) || Triggers(run , HLT_IsoTkMu24,{DiLepton_slc_run[\"HLT_IsoTkMu24\"]})"
+            },
+            "F": {
+                "SingleEG": "!( Triggers(run,HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ,{DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ, {DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ\"]})) && Triggers( run , HLT_Ele27_WPTight_Gsf,{DiLepton_slc_run[\"HLT_Ele27_WPTight_Gsf\"]})",
+                "SingleMuon": "!( Triggers(run,HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ,{DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ, {DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ\"]})) && ( Triggers( run , HLT_IsoMu27,{DiLepton_slc_run[\"HLT_IsoMu27\"]}))",
+                "MuonEG": "Triggers(run , HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ , {DiLepton_slc_run[\"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ\"]}) || Triggers(run,HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ,{DiLepton_slc_run[\"HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ\"]}) || Triggers(run , HLT_IsoTkMu24,{DiLepton_slc_run[\"HLT_IsoTkMu24\"]})"
+            }
+        },
+        "MC": "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ|| HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ|| HLT_IsoMu27||HLT_IsoTkMu24 || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL|| HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL || HLT_Ele27_WPTight_Gsf"
+    }
+}

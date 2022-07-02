@@ -21,14 +21,15 @@ def non_closure_test(era, indir, OS_hist, SS_hist):
     lumi = 41480.
   elif(era == '2018'):
     lumi = 59830.
-  elif(era == '2016'):
+  elif(era == '2016postapv'):
     lumi = 16810.
   elif(era == '2016apv'):
     lumi = 19520.
 
-  signal_list = ['DYnlo','TTTo2L','TTTo1L']
+#  signal_list = ['DYnlo','TTTo2L','TTTo1L']
   data_list = ['DoubleEG','SingleEG','EGamma']
   pass_list = ['DY']
+  back_list = ['TTTo1L']
 
   h_data_OS = None
   h_data_SS = None
@@ -49,7 +50,7 @@ def non_closure_test(era, indir, OS_hist, SS_hist):
         isdata = True
     if(fname in pass_list):
       pass
-    elif(fname in signal_list):
+    elif(fname not in back_list and not isdata):
       if h_MC_OS is None:
         h_MC_OS = fin.Get(OS_hist).Clone()
         h_MC_OS.SetDirectory(ROOT.gROOT)
@@ -104,15 +105,23 @@ def non_closure_test(era, indir, OS_hist, SS_hist):
     MC_number   = h_MC_SS.GetBinContent(i+1)
     lowEdge     = h_data_SS.GetBinLowEdge(i+1)
     highEdge    = h_data_SS.GetBinWidth(i+1)+lowEdge
-
+#    MC_number  += back_number
+#    back_number = 0
 #    print(data_number)
 #    print(MC_number)
 
     if data_number > 0 and MC_number > 1:
       bin_uncertainty = abs((data_number - back_number - MC_number)/MC_number)
-      print("%.2f: %.1f(%.1f ~ %.1f)"%(bin_uncertainty, data_number,lowEdge,highEdge))
-      uncertainty += bin_uncertainty*MC_number # unc. / (unc._data)^2 --> unc._data from Poisson dist.
-      summation   += MC_number
+#      print("%.2f: %.1f(%.1f ~ %.1f)"%(bin_uncertainty, data_number,lowEdge,highEdge))
+      a = data_number
+      b = back_number
+      c = MC_number
+      weight = 1./(a/(c*c)+b/(c*c)+(c+a-b-c)**2/(c**3))
+      #weight = c
+      uncertainty +=  bin_uncertainty*weight# unc. / (unc._data)^2 --> unc._data from Poisson dist.
+      summation   +=  weight
+      print("%.2f: %.4f, %.1f(%.1f ~ %.1f)"%(bin_uncertainty, weight, data_number,lowEdge,highEdge))
+
 
   uncertainty /= summation
   return uncertainty
@@ -139,27 +148,29 @@ def SF_produce(era):
       print(h+": %f"%uncertainty)
       overall_uncertainty = max(uncertainty,overall_uncertainty)
     print(era + ": %f"%overall_uncertainty)
+    print("------------------------------")
 
     Nbin = h_nominal.GetNbinsX()
 
     h_final = h_nominal.Clone()
-    h_final.SetName("SS_ChargeFlip_SF_sys")
+    h_final.SetName("SS_ChargeFlip_SF_AllUnc")
 
     for i in range(Nbin):
       stat_err = h_nominal.GetBinError(i+1)
       over_err = h_nominal.GetBinContent(i+1)*overall_uncertainty
-      sys_err_subMC = h_sys_subMC.GetBinContent(i+1)
-      total_err = (stat_err*stat_err + over_err*over_err + sys_err_subMC*sys_err_subMC)**0.5
+      #sys_err_subMC = h_sys_subMC.GetBinContent(i+1)
+      total_err = (stat_err*stat_err + over_err*over_err)**0.5
       h_final.SetBinError(i+1,total_err)
 
     fin.cd()
-#    h_final.Write()
+    h_final.Write()
     fin.Close()
 
       
 
 if __name__ == '__main__':
-  Eras = ['2017','2018']
+  Eras = ['2016apv','2016postapv','2017','2018']
+#  Eras = ['2018']
   for era in Eras:
     SF_produce(era)
 

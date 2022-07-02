@@ -1,13 +1,17 @@
 import ROOT
 import numpy as np
-from ROOT import kFALSE
 
+from array import array
+import os
+import json
+from collections import OrderedDict
+
+from ROOT import kFALSE
 import CMSTDRStyle
 CMSTDRStyle.setTDRStyle().cd()
 import CMSstyle
 from array import array
 
-plotdir = '/eos/user/t/tihsu/plot/Ele_chargeflip_sf/'
 
 
 def set_axis(the_histo, coordinate, title, is_energy):
@@ -35,85 +39,80 @@ def set_axis(the_histo, coordinate, title, is_energy):
 	else:
 		axis.SetTitle(title) 
 
+def add_process(h, histos, h_index, color, lumi, isMC):
+  if len(h_index) == 0:
+    print("Do not have this sample.")
+  histos[h_index[0]]
+  h = histos[h_index[0]].Clone()
+  if len(h_index) > 1:
+    for i in range(1,len(h_index)):
+      h.Add(histos[h_index[i]])
+  if isMC:
+    h.SetFillColor(color)
+    h.Scale(lumi)
+  else:
+    h.SetMarkerStyle(20)
+    h.SetMarkerSize(0.85)
+    h.SetMarkerColor(1)
+    h.SetLineWidth(1)
+  return h
+
 def draw_plots(hist_array =[], draw_data=0, x_name='', isem=0, h_woSF_MC=None, h_p1_MC=None, h_m1_MC=None, era='2017'):
+
+        plotdir = '/eos/user/t/tihsu/plot/Ele_chargeflip_sf_eratrig/' + era + '/' + 'comparison/'
+        os.system('mkdir -p ' + plotdir)
+
         lumi = 0.
         if(era == '2017'):
           lumi = 41480.
         elif(era == '2018'):
           lumi = 59830.
-        elif(era == '2016'):
+        elif(era == '2016postapv'):
           lumi = 16810.
         elif(era == '2016apv'):
           lumi = 19520.
-	DY = hist_array[0].Clone()
-	DY.SetFillColor(ROOT.kRed)
-	DY.Scale(lumi)
 
-	WJet = hist_array[1].Clone()
-	WJet.SetFillColor(ROOT.kBlue-7)
-	WJet.Scale(lumi)
+        jsonfile = open(os.path.join('data/sample_' + era + 'UL.json'))
+        samples = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
+        jsonfile.close()
 
-	VV = hist_array[2].Clone()
-	VV.Add(hist_array[3])
-	VV.Add(hist_array[4])
-	VV.Add(hist_array[5])
-	VV.Add(hist_array[6])
-	VV.Add(hist_array[7])
-	VV.Add(hist_array[8])
-	VV.SetFillColor(ROOT.kCyan-7)
-	VV.Scale(lumi)
+        d = dict()
+        index = 0
+        for process, desc in samples:
+          if desc[2] not in d:
+            d[desc[2]] = []
+          else:
+            pass
+          d[desc[2]].append(index)
+          index += 1
+        print(d)
 
-	VVV = hist_array[9].Clone()
-	VVV.Add(hist_array[10])
-	VVV.Add(hist_array[11])
-	VVV.Add(hist_array[12])
-	VVV.SetFillColor(ROOT.kSpring-9)
-	VVV.Scale(lumi)
+        DY = None
+        WJet = None
+        VV = None
+        VVV = None
+        SingleTop = None
+        ttXorXX = None
+        tzq = None
+        TT  = None
+        Data = None
 
-	SingleTop = hist_array[13].Clone()
-	SingleTop.Add(hist_array[14])
-	SingleTop.Add(hist_array[15])
-	SingleTop.Add(hist_array[16])
-	SingleTop.Add(hist_array[17])
-	SingleTop.SetFillColor(ROOT.kGray)
-	SingleTop.Scale(lumi)
+        DY        = add_process(DY,        hist_array, d['DY'],        ROOT.kRed,      lumi, 1)
+        WJet      = add_process(WJet,      hist_array, d['WJet'],      ROOT.kBlue-7,   lumi, 1)
+        VV        = add_process(VV,        hist_array, d['VV'],        ROOT.kCyan-7,   lumi, 1)
 
-	ttXorXX = hist_array[18].Clone()
-	ttXorXX.Add(hist_array[19])
-	ttXorXX.Add(hist_array[20])
-	ttXorXX.Add(hist_array[21])
-	ttXorXX.Add(hist_array[22])
-	ttXorXX.Add(hist_array[23])
-	ttXorXX.Add(hist_array[24])
-	ttXorXX.Add(hist_array[25])
-	ttXorXX.Add(hist_array[26])
-	ttXorXX.Add(hist_array[27])
-	ttXorXX.Add(hist_array[28])
-	ttXorXX.Add(hist_array[29])
-	ttXorXX.Add(hist_array[30])
-	ttXorXX.SetFillColor(ROOT.kViolet-4)
-	ttXorXX.Scale(lumi)
+        VVV       = add_process(VVV,       hist_array, d['VVV'],       ROOT.kSpring-9, lumi, 1)
+        SingleTop = add_process(SingleTop, hist_array, d['SingleTop'], ROOT.kGray,     lumi, 1)
+        ttXorXX   = add_process(ttXorXX,   hist_array, d['ttXorXX'],   ROOT.kViolet-4, lumi, 1)
+        tzq       = add_process(tzq,       hist_array, d['tzq'],       ROOT.kYellow-4, lumi, 1)
+        TT        = add_process(TT,        hist_array, d['TT'],        ROOT.kBlue,     lumi, 1)
+        Data      = add_process(Data,      hist_array, d['data'],      ROOT.kBlack,    lumi, 0)
 
-	tzq = hist_array[31].Clone()
-	tzq.SetFillColor(ROOT.kYellow-4)
-	tzq.Scale(lumi)
 
-#	QCD = hist_array[23].Clone()
-#	QCD.Add(hist_array[24])
-#	QCD.Add(hist_array[25])
-#	QCD.Add(hist_array[26])
-#	QCD.Add(hist_array[27])
-#	QCD.SetFillColor(ROOT.kOrange+1)
-#	QCD.Scale(lumi)
 
-	TT = hist_array[32].Clone()
-	TT.Add(hist_array[33])
-	TT.SetFillColor(ROOT.kBlue)
-	TT.Scale(lumi)
-
-	Data = hist_array[34].Clone()
-        if not era == '2018':
-          Data.Add(hist_array[35])
+	#Data = hist_array[34].Clone()
+        #if not era == '2018':
+         # Data.Add(hist_array[35])
 	if isem==1:
 		Data.Add(hist_array[36])#if emu channel
 	if not draw_data: Data.Reset('ICE')
@@ -162,6 +161,7 @@ def draw_plots(hist_array =[], draw_data=0, x_name='', isem=0, h_woSF_MC=None, h
 		xerror_r.append(0.5*h_error.GetBinWidth(i+1))
 		yerror_u.append(h_error.GetBinErrorUp(i+1))
 		yerror_d.append(h_error.GetBinErrorLow(i+1))
+
 	gr = ROOT.TGraphAsymmErrors(len(x), np.array(x), np.array(y),np.array(xerror_l),np.array(xerror_r), np.array(yerror_d), np.array(yerror_u))
 
 	DY_yield =round(DY.Integral(),1)
@@ -378,7 +378,7 @@ def draw_plots(hist_array =[], draw_data=0, x_name='', isem=0, h_woSF_MC=None, h
         leg5.AddEntry(h_ratio_woSF,"w/o SF",'p')
         leg5.Draw("SAME")
 	c.Update()
-	c.SaveAs(plotdir+era+'/'+x_name+'_'+era+'.pdf')
-	c.SaveAs(plotdir+era+'/'+x_name+'_'+era+'.png')
+	c.SaveAs(plotdir+x_name+'_'+era+'.pdf')
+	c.SaveAs(plotdir+x_name+'_'+era+'.png')
 	return c
 	del hist_array

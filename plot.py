@@ -28,7 +28,7 @@ def TTC_Analysis(era):
     lumi = 41480.
   elif(era == '2018'):
     lumi = 59830.
-  elif(era == '2016'):
+  elif(era == '2016postapv'):
     lumi = 16810.
   elif(era == '2016apv'):
     lumi = 19520.
@@ -41,7 +41,8 @@ def TTC_Analysis(era):
   samples = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
   jsonfile.close()
 
-  path = 'validation/era' + era + '/ApplyChargeFlipsf_Nominal/'
+#  path = 'validation/era' + era + '/NotApplyChargeFlipsf_Nominal/'
+  path = 'validation/era' + era + '/NotApplyChargeFlipsf_Nominal/'
   dirs = os.listdir(path)
   fin_demo = ROOT.TFile.Open(path + 'h0_DYnlo.root')
   hists_name = []
@@ -78,7 +79,8 @@ def TTC_Analysis(era):
 if __name__ == "__main__":
   start = time.time()
   start1 = time.clock() 
-  Eras = ['2017','2018']
+#  Eras = ['2017']
+  Eras = ['2016apv','2016postapv','2017','2018']
   for era in Eras:
     TTC_Analysis(era)
   end = time.time()

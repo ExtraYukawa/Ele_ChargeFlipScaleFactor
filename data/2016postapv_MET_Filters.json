@@ -1,0 +1,280 @@
+{
+    "Data": [
+        "Flag_goodVertices",
+        "Flag_globalSuperTightHalo2016Filter",
+        "Flag_HBHENoiseFilter",
+        "Flag_HBHENoiseIsoFilter",
+        "Flag_EcalDeadCellTriggerPrimitiveFilter",
+        "Flag_BadPFMuonFilter",
+        "Flag_BadPFMuonDzFilter",
+        "Flag_eeBadScFilter"
+    ],
+    "MC": {
+        "DY": {
+            "DYnlo": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ]
+        },
+        "WJet": {
+            "WJets": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ]
+        },
+        "VV": {
+            "ww": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "wz_qcd": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "zz2l": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ]
+        },
+        "VVV": {
+            "www1": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "wwz1": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "wzz1": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "zzz1": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ]
+        },
+        "SingleTop": {
+            "tW": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "tbarW": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "t_sch": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "t_tch": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "tbar_tch": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ]
+        },
+        "ttXorXX": {
+            "ttH": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "ttW": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "ttWToQQ": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "ttZ": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "ttZToQQ": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "ttWW": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "ttWZ": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "ttZZ": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ]
+        },
+        "tzq": {
+            "tZq": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ]
+        },
+        "TT": {
+            "TTTo2L2Nu": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "TTTo1L": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ]
+        }
+    }
+}
