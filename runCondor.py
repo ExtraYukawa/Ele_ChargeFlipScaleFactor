@@ -77,8 +77,8 @@ if __name__=='__main__':
   region = ''
 
   if args.method == 'I':
-    tag_dir = 'validation/'
-    region  = 'validation'
+    tag_dir = 'flatten/'
+    region  = 'nominal'
     directory = ["NotApplyChargeFlipsf_Nominal"]
     chargeflip_sf = [(0,0)]
 

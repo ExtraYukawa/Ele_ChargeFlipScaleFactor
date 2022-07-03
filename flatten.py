@@ -135,20 +135,20 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
 
     if isMC:
       OS_filters="OPS_region==3 && OPS_2P0F && OPS_z_mass>%f && OPS_z_mass<%f && MET_T1Smear_pt > 50  && n_tight_jet < 3 && OPS_l1_pt>20 && OPS_l2_pt>20 && abs(OPS_l1_eta)<2.5 && abs(OPS_l2_eta)<2.5 && nHad_tau==0 && OPS_drll > 0.3"%((OS_Zmass-OS_width),(OS_Zmass+OS_width))
-      SS_filters="ttc_region==3 && ttc_2P0F && ttc_mll>%f && ttc_mll<%f && MET_T1Smear_pt > 50 && n_tight_jet < 3 && ttc_l1_pt>20 && ttc_l2_pt>20 && abs(ttc_l1_eta)<2.5 && abs(ttc_l2_eta)<2.5 && nHad_tau==0 && ttc_drll > 0.3"%((SS_Zmass-SS_width),(SS_Zmass+SS_width))
+      SS_filters="ttc_region==3 && ttc_2P0F && (ttc_mll>%f && ttc_mll<%f) && MET_T1Smear_pt > 50 && n_tight_jet < 3 && ttc_l1_pt>20 && ttc_l2_pt>20 && abs(ttc_l1_eta)<2.5 && abs(ttc_l2_eta)<2.5 && nHad_tau==0 && ttc_drll > 0.3"%((SS_Zmass-SS_width),(SS_Zmass+SS_width))
     else:
       OS_filters="OPS_region==3 && OPS_2P0F && OPS_z_mass>%f && OPS_z_mass<%f && MET_T1_pt > 50 && n_tight_jet < 3 && OPS_l1_pt>20 && OPS_l2_pt>20 && abs(OPS_l1_eta)<2.5 && abs(OPS_l2_eta)<2.5 && nHad_tau==0 && OPS_drll > 0.3"%((OS_Zmass-OS_width),(OS_Zmass+OS_width))
-      SS_filters="ttc_region==3 && ttc_2P0F && ttc_mll>%f && ttc_mll<%f && MET_T1_pt > 50 && n_tight_jet < 3 && ttc_l1_pt>20 && ttc_l2_pt>20 && abs(ttc_l1_eta)<2.5 && abs(ttc_l2_eta) < 2.5 && nHad_tau==0 && ttc_drll > 0.3"%((SS_Zmass-SS_width),(SS_Zmass+SS_width))
+      SS_filters="ttc_region==3 && ttc_2P0F && ( ttc_mll>%f && ttc_mll<%f) && MET_T1_pt > 50 && n_tight_jet < 3 && ttc_l1_pt>20 && ttc_l2_pt>20 && abs(ttc_l1_eta)<2.5 && abs(ttc_l2_eta) < 2.5 && nHad_tau==0 && ttc_drll > 0.3"%((SS_Zmass-SS_width),(SS_Zmass+SS_width))
 
   else:
     if isMC:
-      OS_filters="OPS_region==3 && OPS_2P0F && OPS_z_mass>%f && OPS_z_mass<%f && MET_T1Smear_pt < 35 && n_tight_jet < 3 && OPS_l1_pt>20 && OPS_l2_pt>20 && abs(OPS_l1_eta)<2.5 && abs(OPS_l2_eta)<2.5 && nHad_tau==0"%((OS_Zmass-OS_width),(OS_Zmass+OS_width)) 
+      OS_filters="OPS_region==3 && OPS_2P0F && OPS_drll > 0.3 && OPS_z_mass>%f && OPS_z_mass<%f && MET_T1Smear_pt < 50 && n_tight_jet < 3 && OPS_l1_pt>20 && OPS_l2_pt>20 && abs(OPS_l1_eta)<2.5 && abs(OPS_l2_eta)<2.5 && nHad_tau==0"%((OS_Zmass-OS_width),(OS_Zmass+OS_width)) 
     #OS_filters="OPS_region==3 && OPS_2P0F && OPS_z_mass>60 && OPS_z_mass<120 && OPS_l1_pt>30 && OPS_l2_pt>20 && OPS_drll>0.3 && Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter && Flag_ecalBadCalibFilter && nHad_tau==0&& abs(OPS_l1_eta)<2.4 && abs(OPS_l2_eta)<2.4"
-      SS_filters="ttc_region==3 && ttc_2P0F && ttc_mll>%f && ttc_mll<%f && MET_T1Smear_pt < 35 && n_tight_jet <3 && ttc_l1_pt>20 && ttc_l2_pt>20 && abs(ttc_l1_eta)<2.5 && abs(ttc_l2_eta)<2.5&& nHad_tau==0"%((SS_Zmass-SS_width),(SS_Zmass+SS_width))
+      SS_filters="ttc_region==3 && ttc_2P0F && ttc_drll > 0.3 && ttc_mll>%f && ttc_mll<%f && MET_T1Smear_pt < 50 && n_tight_jet <3 && ttc_l1_pt>20 && ttc_l2_pt>20 && abs(ttc_l1_eta)<2.5 && abs(ttc_l2_eta)<2.5&& nHad_tau==0"%((SS_Zmass-SS_width),(SS_Zmass+SS_width))
     else:
-      OS_filters="OPS_region==3 && OPS_2P0F && OPS_z_mass>%f && OPS_z_mass<%f && MET_T1_pt < 35 && n_tight_jet < 3 && OPS_l1_pt>20 && OPS_l2_pt>20 && abs(OPS_l1_eta)<2.5 && abs(OPS_l2_eta)<2.5 && nHad_tau==0"%((OS_Zmass-OS_width),(OS_Zmass+OS_width))
+      OS_filters="OPS_region==3 && OPS_drll > 0.3 && OPS_2P0F && OPS_z_mass>%f && OPS_z_mass<%f && MET_T1_pt < 50 && n_tight_jet < 3 && OPS_l1_pt>20 && OPS_l2_pt>20 && abs(OPS_l1_eta)<2.5 && abs(OPS_l2_eta)<2.5 && nHad_tau==0"%((OS_Zmass-OS_width),(OS_Zmass+OS_width))
 #    OS_filters="OPS_region==3 && OPS_2P0F && OPS_z_mass>60 && OPS_z_mass<120 && OPS_l1_pt>30 && OPS_l2_pt>20 && OPS_drll>0.3 && Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter && Flag_ecalBadCalibFilter && nHad_tau==0 && abs(OPS_l1_eta)<2.4 && abs(OPS_l2_eta)<2.4"
-      SS_filters="ttc_region==3 && ttc_2P0F && ttc_mll>%f && ttc_mll<%f && MET_T1_pt < 35 && n_tight_jet <3  && ttc_l1_pt>20 && ttc_l2_pt>20 && abs(ttc_l1_eta)<2.5 && abs(ttc_l2_eta)<2.5 && nHad_tau==0"%((SS_Zmass-SS_width),(SS_Zmass+SS_width))
+      SS_filters="ttc_region==3 && ttc_2P0F && ttc_drll > 0.3 && ttc_mll>%f && ttc_mll<%f && MET_T1_pt < 50 && n_tight_jet <3  && ttc_l1_pt>20 && ttc_l2_pt>20 && abs(ttc_l1_eta)<2.5 && abs(ttc_l2_eta)<2.5 && nHad_tau==0"%((SS_Zmass-SS_width),(SS_Zmass+SS_width))
 
   for MET_filter in MET_filters:
     OS_filters += " && %s"%MET_filter

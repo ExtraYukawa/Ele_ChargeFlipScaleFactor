@@ -3,22 +3,20 @@
 #include "TFile.h"
 #include "TH2D.h"
 #include "TMath.h"
+#include "TH1D.h"
 
 TString era = "2016apv";
 TFile*f=TFile::Open("data/TriggerSF_"+era+"UL.root");
-TH2D*h1_ee=(TH2D*)f->Get("h2D_SF_ee_lep1pteta");
-TH2D*h2_ee=(TH2D*)f->Get("h2D_SF_ee_lep2pteta");
-TH2D*h1_mm=(TH2D*)f->Get("h2D_SF_mumu_lep1pteta");
-TH2D*h2_mm=(TH2D*)f->Get("h2D_SF_mumu_lep2pteta");
-TH2D*h1_em=(TH2D*)f->Get("h2D_SF_emu_lep1pteta");
-TH2D*h2_em=(TH2D*)f->Get("h2D_SF_emu_lep2pteta");
+TH2D*h1_ee=(TH2D*)f->Get("h2D_SF_ee_SF_l1l2pt");
+TH2D*h1_mm=(TH2D*)f->Get("h2D_SF_mumu_SF_l1l2pt");
+TH2D*h1_em=(TH2D*)f->Get("h2D_SF_emu_SF_l1l2pt");
 
 TFile*f_cf=TFile::Open("data/ChargeFlipSF_" + era + "_MLE.root");
-TH2F*h_OS=(TH2F*)f_cf->Get("OS_ChargeFlip_SF");
-TH2F*h_SS = (TH2F*)f_cf->Get("SS_ChargeFlip_SF_AllUnc"); 
+TH1D*h_OS=(TH1D*)f_cf->Get("OS_ChargeFlip_SF");
+TH1D*h_SS = (TH1D*)f_cf->Get("SS_ChargeFlip_SF_AllUnc"); 
 
 TFile*f_cfregion=TFile::Open("data/ChargeFlipProbability_" + era + "_MLE.root");
-TH2F*h_data = (TH2F*) f_cfregion->Get("data_CFRate");
+TH2D*h_data = (TH2D*) f_cfregion->Get("data_CFRate");
 
 TFile*fele=TFile::Open("data/EleIDSF_" + era + ".root");
 TH2D*h_eleSF=(TH2D*)fele->Get("EleIDSF");
@@ -34,24 +32,21 @@ float eleID_sf_ee(float l1_pt, float l2_pt, float l1_eta, float l2_eta){
 float trigger_sf_ee(float l1_pt, float l2_pt, float l1_eta, float l2_eta){
 	if(l1_pt>200) l1_pt=199;
 	if(l2_pt>200) l2_pt=199;
-	float sf_l1=h1_ee->GetBinContent(h1_ee->FindBin(l1_pt,fabs(l1_eta)));
-	float sf_l2=h2_ee->GetBinContent(h2_ee->FindBin(l2_pt,fabs(l2_eta)));
+	float sf_l1=h1_ee->GetBinContent(h1_ee->FindBin(l1_pt,l2_pt));
 	return sf_l1;
 }
 
 float trigger_sf_mm(float l1_pt, float l2_pt, float l1_eta, float l2_eta){
 	if(l1_pt>200) l1_pt=199;
 	if(l2_pt>200) l2_pt=199;
-	float sf_l1=h1_mm->GetBinContent(h1_mm->FindBin(l1_pt,fabs(l1_eta)));
-	float sf_l2=h2_mm->GetBinContent(h2_mm->FindBin(l2_pt,fabs(l2_eta)));
+	float sf_l1=h1_mm->GetBinContent(h1_mm->FindBin(l1_pt,l2_pt));
 	return sf_l1;
 }
 
 float trigger_sf_em(float l1_pt, float l2_pt, float l1_eta, float l2_eta){
 	if(l1_pt>200) l1_pt=199;
 	if(l2_pt>200) l2_pt=199;
-	float sf_l1=h1_em->GetBinContent(h1_em->FindBin(l1_pt,fabs(l1_eta)));
-	float sf_l2=h2_em->GetBinContent(h2_em->FindBin(l2_pt,fabs(l2_eta)));
+	float sf_l1=h1_em->GetBinContent(h1_em->FindBin(l1_pt,l2_pt));
 	return sf_l1;
 }
 

@@ -11,8 +11,8 @@ def SF_produce(era, h_data, h_MC, h_data_cov, h_MC_cov, draw, tag):
   eta_bins = h_data.GetYaxis().GetNbins()
   print(pt_bins)
   # Calculate SF in respect to SS and OS event.
-  h_SF_OS = ROOT.TH1F("OS_ChargeFlip_SF" + tag, ";;", (pt_bins*eta_bins)**2+10,0,(pt_bins*eta_bins)**2+10)
-  h_SF_SS = ROOT.TH1F("SS_ChargeFlip_SF" + tag, ";;", (pt_bins*eta_bins)**2+10,0,(pt_bins*eta_bins)**2+10)
+  h_SF_OS = ROOT.TH1D("OS_ChargeFlip_SF" + tag, ";;", (pt_bins*eta_bins)**2+10,0,(pt_bins*eta_bins)**2+10)
+  h_SF_SS = ROOT.TH1D("SS_ChargeFlip_SF" + tag, ";;", (pt_bins*eta_bins)**2+10,0,(pt_bins*eta_bins)**2+10)
 
   for i in range(pt_bins):
     for j in range(eta_bins):

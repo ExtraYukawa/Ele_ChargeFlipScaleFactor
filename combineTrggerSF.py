@@ -25,7 +25,7 @@ def get_hist(era,channel,subtitle,fout):
   fin.Close()
 def produce_combine_file(era):
   channels = ["DoubleMuon", "DoubleElectron", "ElectronMuon"]
-  subtitles = ["l1pteta", "l2pteta"]
+  subtitles = ["l1l2pt"]
   fout = ROOT.TFile.Open("data/TriggerSF_"+era+"UL.root","RECREATE")
   for channel in channels:
     for subtitle in subtitles:

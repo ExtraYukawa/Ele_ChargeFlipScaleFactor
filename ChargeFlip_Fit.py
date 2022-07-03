@@ -152,8 +152,8 @@ def fit(era, h_sig_OS, h_sig_SS, h_back_OS, h_back_SS, h_data_OS, h_data_SS, pt_
     gMinuit.mnemat(matrix.GetMatrixArray(),npar)
     matrix.Print();
 
-    h_chargeflip = ROOT.TH2F(h+"_CFRate",";P_{T}[GeV] ; |\eta|};",pt_bins,pt_region,eta_bins,eta_region)
-    h_chargeflip_cov = ROOT.TH2F(h+"_CovMatrix",";;",npar,0,9,npar,0,9)
+    h_chargeflip = ROOT.TH2D(h+"_CFRate",";P_{T}[GeV] ; |\eta|};",pt_bins,pt_region,eta_bins,eta_region)
+    h_chargeflip_cov = ROOT.TH2D(h+"_CovMatrix",";;",npar,0,9,npar,0,9)
     for i in range(npar):
       for j in range(npar):
         h_chargeflip_cov.SetBinContent(i+1,j+1,matrix[i][j])

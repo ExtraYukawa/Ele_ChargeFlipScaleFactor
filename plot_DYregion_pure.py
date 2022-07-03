@@ -38,9 +38,9 @@ def set_axis(the_histo, coordinate, title, is_energy):
 def add_process(h, histos, h_index, color, lumi, isMC):
   if len(h_index) == 0:
     print("Do not have this sample.")
-  print(h_index)
-  print(histos)
-  print(len(histos))
+#  print(h_index)
+#  print(histos)
+#  print(len(histos))
   histos[h_index[0]]
   h = histos[h_index[0]].Clone()
   if len(h_index) > 1:
@@ -84,7 +84,7 @@ def draw_plots(hist_array =[], draw_data=0, x_name='', isem=0, era = '2017'):
             pass
           d[desc[2]].append(index)
           index += 1
-        print(d)
+        #print(d)
    
         DY = None
         WJet = None
