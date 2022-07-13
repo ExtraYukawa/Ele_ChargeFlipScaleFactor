@@ -19,8 +19,8 @@ def SF_produce(era, h_data, h_MC, h_data_cov, h_MC_cov, draw, tag):
       for ii in range(pt_bins):
         for jj in range(eta_bins):
           index = jj + ii*eta_bins + j*eta_bins*pt_bins + i*eta_bins*pt_bins*eta_bins
-          index_1 = j + i*eta_bins
-          index_2 = jj+ ii*eta_bins
+          index_1 = j + i*eta_bins + 1
+          index_2 = jj+ ii*eta_bins + 1
 
           P1_data = h_data.GetBinContent(i+1,j+1)
           P2_data = h_data.GetBinContent(ii+1,jj+1)

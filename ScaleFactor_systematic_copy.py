@@ -29,7 +29,7 @@ def non_closure_test(era, indir, OS_hist, SS_hist):
 #  signal_list = ['DYnlo','TTTo2L','TTTo1L']
   data_list = ['DoubleEG','SingleEG','EGamma']
   pass_list = ['DY']
-  back_list = []
+  back_list = ['TTTo1L']
 
   h_data_OS = None
   h_data_SS = None
@@ -52,32 +52,17 @@ def non_closure_test(era, indir, OS_hist, SS_hist):
       pass
     elif(fname not in back_list and not isdata):
       if h_MC_OS is None:
-        h_MC_OS = fin.Get(OS_hist+"_genOS").Clone()
+        h_MC_OS = fin.Get(OS_hist).Clone()
         h_MC_OS.SetDirectory(ROOT.gROOT)
         h_MC_OS.Scale(lumi)
-        h_MC_SS = fin.Get(SS_hist+"_genOS").Clone()
+        h_MC_SS = fin.Get(SS_hist).Clone()
         h_MC_SS.SetDirectory(ROOT.gROOT)
         h_MC_SS.Scale(lumi)
       else:
-        h_TT_OS = fin.Get(OS_hist+"_genOS").Clone()
-        h_TT_SS = fin.Get(SS_hist+"_genOS").Clone()
+        h_TT_OS = fin.Get(OS_hist).Clone()
+        h_TT_SS = fin.Get(SS_hist).Clone()
         h_MC_OS.Add(h_TT_OS,lumi)
         h_MC_SS.Add(h_TT_SS,lumi)
-
-      if(h_back_OS is None):
-        h_back_OS = (fin.Get(OS_hist)).Clone()
-        h_back_OS.SetDirectory(ROOT.gROOT)
-        h_back_OS.Scale(lumi)
-      else:
-        h = fin.Get(OS_hist).Clone()
-        h_back_OS.Add(h,lumi)
-      if(h_back_SS is None):
-        h_back_SS = fin.Get(SS_hist).Clone()
-        h_back_SS.SetDirectory(ROOT.gROOT)
-        h_back_SS.Scale(lumi)
-      else:
-        h = fin.Get(SS_hist).Clone()
-        h_back_SS.Add(h,lumi)
 
     elif(isdata):
       if(h_data_OS is None):
@@ -120,7 +105,6 @@ def non_closure_test(era, indir, OS_hist, SS_hist):
     MC_number   = h_MC_SS.GetBinContent(i+1)
     lowEdge     = h_data_SS.GetBinLowEdge(i+1)
     highEdge    = h_data_SS.GetBinWidth(i+1)+lowEdge
-    back_number -= MC_number
 #    MC_number  += back_number
 #    back_number = 0
 #    print(data_number)
@@ -186,12 +170,6 @@ def SF_produce(era):
     h_final.Write()
     fin.Close()
 
-    fin = ROOT.TFile.Open("data/ChargeFlipProbability_%s_MLE.root"%era,"UPDATE")
-    fin.cd()
-    h_final = ROOT.TH1D("overall_sys","",1,0,1)
-    h_final.SetBinContent(1,overall_uncertainty)
-    h_final.Write()
-    fin.Close()
       
 
 if __name__ == '__main__':
