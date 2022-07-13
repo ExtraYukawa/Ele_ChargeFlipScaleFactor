@@ -39,12 +39,12 @@ def fit(era, h_sig_OS, h_sig_SS, h_back_OS, h_back_SS, h_data_OS, h_data_SS, pt_
      for ii in range(pt_bins):
        for jj in range(eta_bins):
          index = jj+ii*eta_bins+j*eta_bins*pt_bins+i*eta_bins*pt_bins*eta_bins
-         sig_OS[i][j][ii][jj] = h_sig_OS.GetBinContent(index+2)
-         sig_SS[i][j][ii][jj] = h_sig_SS.GetBinContent(index+2)
-         back_OS[i][j][ii][jj] = h_back_OS.GetBinContent(index+2)
-         back_SS[i][j][ii][jj] = h_back_SS.GetBinContent(index+2)
-         data_OS[i][j][ii][jj] = h_data_OS.GetBinContent(index+2)
-         data_SS[i][j][ii][jj] = h_data_SS.GetBinContent(index+2)
+         sig_OS[i][j][ii][jj] = h_sig_OS.GetBinContent(h_sig_OS.FindBin(index))
+         sig_SS[i][j][ii][jj] = h_sig_SS.GetBinContent(h_sig_SS.FindBin(index))
+         back_OS[i][j][ii][jj] = h_back_OS.GetBinContent(h_back_OS.FindBin(index))
+         back_SS[i][j][ii][jj] = h_back_SS.GetBinContent(h_back_SS.FindBin(index))
+         data_OS[i][j][ii][jj] = h_data_OS.GetBinContent(h_data_OS.FindBin(index))
+         data_SS[i][j][ii][jj] = h_data_SS.GetBinContent(h_data_SS.FindBin(index))
   
   Number['MC_os'] = sig_OS
   Number['MC_ss'] = sig_SS
@@ -152,7 +152,7 @@ def fit(era, h_sig_OS, h_sig_SS, h_back_OS, h_back_SS, h_data_OS, h_data_SS, pt_
     gMinuit.mnemat(matrix.GetMatrixArray(),npar)
     matrix.Print();
 
-    h_chargeflip = ROOT.TH2D(h+"_CFRate",";P_{T}[GeV] ; |\eta|};",pt_bins,pt_region,eta_bins,eta_region)
+    h_chargeflip = ROOT.TH2D(h+"_CFRate",";P_{T}[GeV] ; |\eta|;",pt_bins,pt_region,eta_bins,eta_region)
     h_chargeflip_cov = ROOT.TH2D(h+"_CovMatrix",";;",npar,0,9,npar,0,9)
     for i in range(npar):
       for j in range(npar):
@@ -198,6 +198,7 @@ def fit(era, h_sig_OS, h_sig_SS, h_back_OS, h_back_SS, h_data_OS, h_data_SS, pt_
   h_data.Draw('COLZTEXT e')
   c.Update()
   if draw:
+    Fout.cd()
     c.SaveAs(plotdir+'Data_CFRate_'+method+'_' + era + '.png')
     c.SaveAs(plotdir+'Data_CFRate_'+method+'_' + era + '.pdf')
     h_data.Write()

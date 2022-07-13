@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include "TH1D.h"
 
-TString era = "2018";
+TString era = "2017";
 TFile*f=TFile::Open("data/TriggerSF_"+era+"UL.root");
 TH2D*h1_ee=(TH2D*)f->Get("h2D_SF_ee_SF_l1l2pt");
 TH2D*h1_mm=(TH2D*)f->Get("h2D_SF_mumu_SF_l1l2pt");
@@ -125,7 +125,7 @@ int isHEM(int run, ROOT::VecOps::RVec<float> Jet_pt, ROOT::VecOps::RVec<Float_t>
   return HEM;
 }
 
-float gen_deltaPt(float l1_pt, float l1_eta, float l1_phi, int l1_pdgid, int ngenlepton, ROOT::VecOps::RVec<Float_t> gen_pt, ROOT::VecOps::RVec<Float_t> gen_eta, ROOT::VecOps::RVec<Float_t> gen_phi, ROOT::VecOps::RVec<Int_t> gen_pdgid){
+float gen_deltaPt(float l1_pt, float l1_eta, float l1_phi, int l1_pdgid, int ngenlepton, ROOT::VecOps::RVec<Float_t> gen_pt, ROOT::VecOps::RVec<Float_t> gen_eta, ROOT::VecOps::RVec<Float_t> gen_phi, ROOT::VecOps::RVec<Float_t> gen_pdgid){
 
   float deltaR_lep1 = 99.;
   int genlep1_idx = -1;
@@ -141,9 +141,9 @@ float gen_deltaPt(float l1_pt, float l1_eta, float l1_phi, int l1_pdgid, int nge
         }
    }
    if (genlep1_idx == -1) return 99.;
-   return fabs(gen_pt[genlep1_idx]-l1_pt);
+   return fabs(gen_pt[genlep1_idx]-l1_pt)/l1_pt;
 }
-float gen_deltaR(float l1_pt, float l1_eta, float l1_phi, int l1_pdgid, int ngenlepton, ROOT::VecOps::RVec<Float_t> gen_pt, ROOT::VecOps::RVec<Float_t> gen_eta, ROOT::VecOps::RVec<Float_t> gen_phi, ROOT::VecOps::RVec<Int_t> gen_pdgid){
+float gen_deltaR(float l1_pt, float l1_eta, float l1_phi, int l1_pdgid, int ngenlepton, ROOT::VecOps::RVec<Float_t> gen_pt, ROOT::VecOps::RVec<Float_t> gen_eta, ROOT::VecOps::RVec<Float_t> gen_phi, ROOT::VecOps::RVec<Float_t> gen_pdgid){
 
   float deltaR_lep1 = 99.;
   int genlep1_idx = -1;
@@ -160,7 +160,7 @@ float gen_deltaR(float l1_pt, float l1_eta, float l1_phi, int l1_pdgid, int ngen
      return deltaR_lep1;
 }
 
-int gen_isOS(float l1_pt, float l1_eta, float l1_phi, int l1_pdgid, float l2_pt, float l2_eta, float l2_phi, int l2_pdgid, int ngenlepton, ROOT::VecOps::RVec<Float_t> gen_pt, ROOT::VecOps::RVec<Float_t> gen_eta, ROOT::VecOps::RVec<Float_t> gen_phi, ROOT::VecOps::RVec<Int_t> gen_pdgid){
+int gen_isOS(float l1_pt, float l1_eta, float l1_phi, int l1_pdgid, float l2_pt, float l2_eta, float l2_phi, int l2_pdgid, int ngenlepton, ROOT::VecOps::RVec<Float_t> gen_pt, ROOT::VecOps::RVec<Float_t> gen_eta, ROOT::VecOps::RVec<Float_t> gen_phi, ROOT::VecOps::RVec<Float_t> gen_pdgid){
 
   int isOS = -1;
   float deltaR_lep1 = 99.;
@@ -208,14 +208,3 @@ bool Triggers(int run, bool triggers, std::vector<int> vec){
     return false;
 }
 
-int n_Tighter_jets(int n_tight_jet, ROOT::VecOps::RVec<Int_t> tightJets_id_in24, ROOT::VecOps::RVec<Int_t> JetpuId, ROOT::VecOps::RVec<Float_t> Jet_pt){
-
-  int njet = 0;
-  for(int i = 0; i < n_tight_jet; i++){
-    int index = tightJets_id_in24[i];
-    if (JetpuId[index] == 0 && Jet_pt[index] < 50) continue;
-    njet += 1;
-  }
-
-  return njet;
-}
