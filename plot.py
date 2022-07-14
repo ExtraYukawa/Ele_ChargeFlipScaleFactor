@@ -42,7 +42,7 @@ def TTC_Analysis(era):
   jsonfile.close()
 
   path = 'flatten/era' + era + '/NotApplyChargeFlipsf_Nominal/'
-#  path = 'validation/era' + era + '/ApplyChargeFlipsf_Nominal/'
+  path = 'validation/era' + era + '/ApplyChargeFlipsf_Nominal/'
   dirs = os.listdir(path)
   fin_demo = ROOT.TFile.Open(path + 'h0_DYnlo.root')
   hists_name = []

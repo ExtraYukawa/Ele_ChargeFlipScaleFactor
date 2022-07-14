@@ -89,8 +89,8 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
 #################
 
   #histograms name
-  OS_hists_name = ['OPS_l1_pt','OPS_l1_eta','OPS_l1_phi','OPS_l2_pt','OPS_l2_eta','OPS_l2_phi','OPS_z_pt','OPS_z_eta','OPS_z_phi','OPS_z_mass','OPS_kinematic_region']
-  SS_hists_name = ['ttc_l1_pt','ttc_l1_eta','ttc_l1_phi','ttc_l2_pt','ttc_l2_eta','ttc_l2_phi','ttc_mll','ttc_kinematic_region']
+  OS_hists_name = ['OPS_l1_pt','OPS_l1_eta','OPS_l1_phi','OPS_l2_pt','OPS_l2_eta','OPS_l2_phi','OPS_z_pt','OPS_z_eta','OPS_z_phi','OPS_z_mass','OPS_kinematic_region',"n_tight_jet","PV_npvsGood","PV_npvs","nOtherPV","nGenDressedLepton","Pileup_nPU"]
+  SS_hists_name = ['ttc_l1_pt','ttc_l1_eta','ttc_l1_phi','ttc_l2_pt','ttc_l2_eta','ttc_l2_phi','ttc_mll','ttc_dr_l1j1','ttc_dr_l1j2','ttc_dr_l2j1','ttc_dr_l2j2','ttc_kinematic_region',"n_tight_jet","PV_npvsGood","PV_npvs","nOtherPV","nGenDressedLepton","Pileup_nPU"]
 
   #histograms bins [nbins, low edge, high edge]
 
@@ -106,6 +106,12 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
     OS_hists_name[8]:[20,-4,4],
     OS_hists_name[9]:[60,60,120],
     OS_hists_name[10]:[150,-1,149],
+    OS_hists_name[11]:[3,0,3],
+    OS_hists_name[12]:[50,0,50],
+    OS_hists_name[13]:[50,0,50],
+    OS_hists_name[14]:[50,0,50],
+    OS_hists_name[15]:[4,0,4],
+    OS_hists_name[16]:[50,0,50],
     SS_hists_name[0]:[20,0,200],
     SS_hists_name[1]:[16,-2.4,2.4],
     SS_hists_name[2]:[20,-4,4],
@@ -113,7 +119,11 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
     SS_hists_name[4]:[16,-2.4,2.4],
     SS_hists_name[5]:[20,-4,4],
     SS_hists_name[6]:[60,60,120],
-    SS_hists_name[7]:[150,-1,149]
+    SS_hists_name[11]:[150,-1,149],
+    SS_hists_name[7]:[100,0,10],
+    SS_hists_name[8]:[100,0,10],
+    SS_hists_name[9]:[100,0,10],
+    SS_hists_name[10]:[100,0,10]
   }
 
   histos = []
@@ -167,6 +177,48 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
   df_OS = df_OS_a.Range(start,end)
   df_SS = df_SS_a.Range(start,end)
 
+  # GenLevel Information
+  if isMC:
+    df_OS = df_OS.Define("OPS_genOS","gen_isOS(OPS_l1_pt, OPS_l1_eta, OPS_l1_phi, OPS_l1_pdgid, OPS_l2_pt, OPS_l2_eta, OPS_l2_phi, OPS_l2_pdgid, nGenDressedLepton, GenDressedLepton_pt, GenDressedLepton_eta, GenDressedLepton_phi, GenDressedLepton_pdgId)")
+    df_OS = df_OS.Define("OPS_gendeltaPt","gen_deltaPt(OPS_l1_pt, OPS_l1_eta, OPS_l1_phi, OPS_l1_pdgid, nGenDressedLepton, GenDressedLepton_pt, GenDressedLepton_eta, GenDressedLepton_phi,GenDressedLepton_pdgId)")
+    df_OS = df_OS.Define("OPS_gendeltaR","gen_deltaR(OPS_l1_pt, OPS_l1_eta, OPS_l1_phi, OPS_l1_pdgid, nGenDressedLepton, GenDressedLepton_pt, GenDressedLepton_eta, GenDressedLepton_phi,GenDressedLepton_pdgId)")
+    df_SS = df_SS.Define("ttc_genOS","gen_isOS(ttc_l1_pt, ttc_l1_eta, ttc_l1_phi, ttc_l1_pdgid, ttc_l2_pt, ttc_l2_eta, ttc_l2_phi, ttc_l2_pdgid, nGenDressedLepton, GenDressedLepton_pt, GenDressedLepton_eta, GenDressedLepton_phi, GenDressedLepton_pdgId)")
+    df_SS = df_SS.Define("ttc_gendeltaPt","gen_deltaPt(ttc_l1_pt, ttc_l1_eta, ttc_l1_phi, ttc_l1_pdgid, nGenDressedLepton, GenDressedLepton_pt, GenDressedLepton_eta, GenDressedLepton_phi,GenDressedLepton_pdgId)")
+    df_SS = df_SS.Define("ttc_gendeltaR","gen_deltaR(ttc_l1_pt, ttc_l1_eta, ttc_l1_phi, ttc_l1_pdgid, nGenDressedLepton, GenDressedLepton_pt, GenDressedLepton_eta, GenDressedLepton_phi,GenDressedLepton_pdgId)")
+
+
+  else:
+    df_OS = df_OS.Define("OPS_genOS","-1")
+    df_SS = df_SS.Define("ttc_genOS","-1")
+    df_OS = df_OS.Define("OPS_gendeltaPt","99.")
+    df_SS = df_SS.Define("ttc_gendeltaPt","99.")
+    df_OS = df_OS.Define("OPS_gendeltaR","99.")
+    df_SS = df_SS.Define("ttc_gendeltaR","99.")
+    df_OS = df_OS.Define("nGenDressedLepton","0")
+    df_SS = df_SS.Define("nGenDressedLepton","0")
+    df_OS = df_OS.Define("Pileup_nPU","0")
+    df_SS = df_SS.Define("Pileup_nPU","0")
+  df_OS = df_OS.Define("n_Tighter_jet","n_Tighter_jets(n_tight_jet,tightJets_id_in24,Jet_puId,Jet_pt_nom)")
+
+  df_SS = df_SS.Define("n_Tighter_jet","n_Tighter_jets(n_tight_jet,tightJets_id_in24,Jet_puId,Jet_pt_nom)")
+
+  OS_hists_name.append("OPS_genOS")
+  OS_hists_name.append("OPS_gendeltaPt")
+  OS_hists_name.append("OPS_gendeltaR")
+  SS_hists_name.append("ttc_gendeltaPt")
+  SS_hists_name.append("ttc_gendeltaR")
+  SS_hists_name.append("ttc_genOS")
+  OS_hists_name.append("n_Tighter_jet")
+  SS_hists_name.append("n_Tighter_jet")
+  histos_bins["OPS_genOS"] = [3,-1,2]
+  histos_bins["OPS_gendeltaPt"] = [200,0,200]
+  histos_bins["OPS_gendeltaR"] = [300,0,0.3]
+  histos_bins["ttc_genOS"] = [3,0,3]
+  histos_bins["ttc_gendeltaPt"] = [60,0,60]
+  histos_bins["ttc_gendeltaR"] = [100,0,0.1]
+  histos_bins["n_Tighter_jet"] = [3,0,3]
+
+
   # HEM veto [ 2018 issue ]
 
   if era == "2018":
@@ -211,6 +263,7 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
       df_histo = df_OS_tree.Histo1D(('OS_'+i,'',histos_bins[i][0],histos_bins[i][1],histos_bins[i][2]), i,'genweight')
       histos.append(df_histo.GetValue().Clone())
     for i in SS_hists_name:
+      print(i)
       df_histo = df_SS_tree.Histo1D(('SS_'+i,'',histos_bins[i][0],histos_bins[i][1],histos_bins[i][2]), i,'genweight')
       histos.append(df_histo.GetValue().Clone())
 
@@ -218,6 +271,13 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
     histos.append(df_histo.GetValue().Clone())
     df_histo = df_SS_tree.Histo1D(('SS_MET','',20,0,200),'MET_T1Smear_pt','genweight')
     histos.append(df_histo.GetValue().Clone())
+
+  # selection for gen-level OS events
+    df_SS_genOS = df_SS_tree.Filter("ttc_genOS==1")
+    for i in SS_hists_name:
+        df_histo = df_SS_genOS.Histo1D(('SS_'+i + '_genOS','',histos_bins[i][0],histos_bins[i][1],histos_bins[i][2]), i,'genweight')
+        histos.append(df_histo.GetValue().Clone())
+
 
 
   else:
@@ -231,11 +291,15 @@ def analysis(region, era, isMC, add_trigger_SF, fin, xs, cfsf, shift, start, end
     df_SS_tree = data_trigger(df_SS_tree, channel, subera, dataset, trig_list, trig_command_list)
 
     for i in OS_hists_name:
+      print(i)
       df_data_histo = df_OS_tree.Histo1D(('OS_'+i,'',histos_bins[i][0],histos_bins[i][1],histos_bins[i][2]), i)
       histos.append(df_data_histo)
     for i in SS_hists_name:
       df_data_histo = df_SS_tree.Histo1D(('SS_'+i,'',histos_bins[i][0],histos_bins[i][1],histos_bins[i][2]), i)
       histos.append(df_data_histo)
+      df_data_histo = df_SS_tree.Histo1D(('SS_'+i + '_genOS','',histos_bins[i][0],histos_bins[i][1],histos_bins[i][2]), i)
+      histos.append(df_data_histo)
+
 
     df_histo = df_OS_tree.Histo1D(('OS_MET','',20,0,200),'MET_T1_pt')
     histos.append(df_histo.GetValue().Clone())

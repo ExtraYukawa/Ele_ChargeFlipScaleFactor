@@ -93,8 +93,8 @@ def TTC_Analysis(era):
 if __name__ == "__main__":
   start = time.time()
   start1 = time.clock() 
-#  Eras = ['2016apv','2016postapv','2017','2018']
-  Eras = ['2017','2018']
+  Eras = ['2016apv','2016postapv','2017','2018']
+#  Eras = ['2017','2018']
   for era in Eras:
     TTC_Analysis(era)
   end = time.time()

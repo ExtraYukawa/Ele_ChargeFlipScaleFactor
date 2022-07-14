@@ -22,7 +22,7 @@ def prepare_range(path, fin):
   except:
     print("%s%s fail to process."%(path,fin))
     return None
-def prepare_shell(region, era, isMC, trig_sf, cfsf, shift, fin, xs, start, end, label, FarmDir,condor, process, subprocess):
+def prepare_shell(region, era, isMC, trig_sf, cfsf, shift, fin, xs, start, end, label, FarmDir,condor, process, subprocess,tag_dir,check):
   cmsswBase = os.environ['CMSSW_BASE']
   shell_name = region + "_" + era + "_" + str(cfsf) + str(shift) + fin + str(label) + ".sh"
   with open('%s/%s'%(FarmDir,shell_name),'w') as shell:
@@ -46,13 +46,28 @@ def prepare_shell(region, era, isMC, trig_sf, cfsf, shift, fin, xs, start, end, 
     shell.write('--process %s '%process)
     shell.write('--subprocess %s '%subprocess)
   condor.write('cfgFile=%s\n'%shell_name)
-  condor.write('queue 1\n') 
+  condor.write('queue 1\n')
+
+  cfsf_name = "ApplyChargeFlipsf" if cfsf else "NotApplyChargeFlipsf"
+  shift_name = "_Nominal/"
+  if shift==1:
+    shift_name = "_UP/"
+  elif shift == -1:
+    shift_name = "_DOWN/"
+  fout_name = tag_dir + "era" + era + "/" + cfsf_name + shift_name + "h" + str(label) + "_" + fin
+  if check == 1:
+    try:
+      fout = ROOT.TFile.Open(fout_name, "READ")
+    except:
+      print("Can not produce %s"%fout_name)
+ 
 
 if __name__=='__main__':
 
   usage = 'usage: %prog [options]'
   parser = optparse.OptionParser(usage)
   parser.add_option('-m', '--method', dest='method', help='[I] flatten w/o SF [II] flatten w SF [III] plot validation region', default='I', type='string')
+  parser.add_option('-c', '--check', dest ='check', help='check if everything goes well', default='0', type='int')
   (args,opt) = parser.parse_args()
 
   FarmDir = os.environ['CMSSW_BASE'] + "/Farm/"
@@ -68,7 +83,7 @@ if __name__=='__main__':
   condor.write('+MaxRuntime = 7200\n')
 
 #  Eras = ['2017','2018']
-  Eras = ['2016apv','2016postapv','2017','2018']
+  Eras = ['2016postapv','2016apv','2017','2018']
   trigger_sf = 1
 
   chargeflip_sf = []
@@ -85,8 +100,8 @@ if __name__=='__main__':
   elif (args.method == 'II' or args.method == 'V'):
     tag_dir = 'flatten/'
     region  = 'nominal'
-    chargeflip_sf = [(0,0),(1,1),(1,0),(1,-1)]
-    directory = ["ApplyChargeFlipsf_Nominal", "NotApplyChargeFlipsf_Nominal", "ApplyChargeFlipsf_UP", "ApplyChargeFlipsf_DOWN"]
+    chargeflip_sf = [(1,1),(1,0),(1,-1)]
+    directory = ["ApplyChargeFlipsf_Nominal", "ApplyChargeFlipsf_UP", "ApplyChargeFlipsf_DOWN"]
 
   elif (args.method == 'III'):
     tag_dir = 'validation/'
@@ -97,13 +112,14 @@ if __name__=='__main__':
   elif (args.method == 'IV' or args.method == 'V'):
     tag_dir = 'validation/'
     region  = 'validation'
-    chargeflip_sf = [(0,0),(1,1),(1,0),(1,-1)]
-    directory = ["ApplyChargeFlipsf_Nominal", "NotApplyChargeFlipsf_Nominal", "ApplyChargeFlipsf_UP", "ApplyChargeFlipsf_DOWN"]
+    chargeflip_sf = [(0,0),(1,1),(1,-1)]
+    directory = ["NotApplyChargeFlipsf_Nominal", "ApplyChargeFlipsf_UP", "ApplyChargeFlipsf_DOWN"]
 
   for era in Eras:
     for di in directory:
       os.system('mkdir -p ' + tag_dir + 'era%s/%s'%(era,di))
-      os.system('rm ' + tag_dir + 'era%s/%s/*'%(era,di))
+      if not args.check:
+        os.system('rm ' + tag_dir + 'era%s/%s/*'%(era,di))
     if(era == "2017"):
       path = '/eos/cms/store/group/phys_top/ExtraYukawa/TTC_version9/'
     elif(era == '2018'):
@@ -131,7 +147,8 @@ if __name__=='__main__':
             start = range_list[i]
             end = range_list[i+1]
             for cfsf,shift in chargeflip_sf:
-              prepare_shell(region, era,desc[1],trigger_sf,cfsf,shift,f,desc[0],start,end,i, FarmDir,condor, desc[2],process)
+              prepare_shell(region, era,desc[1],trigger_sf,cfsf,shift,f,desc[0],start,end,i, FarmDir,condor, desc[2],process,tag_dir,args.check)
   condor.close()
-  os.system('condor_submit %s/condor.sub'%FarmDir)
+  if not args.check:
+    os.system('condor_submit %s/condor.sub'%FarmDir)
 
