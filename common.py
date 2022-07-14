@@ -123,8 +123,8 @@ def select_MC_event(df_MC_tree, add_trigger_SF, add_chargeflip_SF, shift, filter
     df_MC_tree = df_MC_tree.Define("trigger_SF", "trigger_sf_ee(OPS_l1_pt, OPS_l2_pt, OPS_l1_eta, OPS_l2_eta)")
     df_MC_tree = df_MC_tree.Define("eeID_SF", "eleID_sf_ee(OPS_l1_pt, OPS_l2_pt, OPS_l1_eta, OPS_l2_eta)")
     df_MC_tree = df_MC_tree.Define("OPS_kinematic_region","kinematic(OPS_l1_pt, OPS_l2_pt, OPS_l1_eta, OPS_l2_eta)")
-    if(add_chargeflip_SF and not "TTTo1L" in process):
-      df_MC_tree = df_MC_tree.Define("charge_flip_SF", "chargeflip_sf(OPS_kinematic_region,1,-1,"+str(shift)+")")
+    if(add_chargeflip_SF):
+      df_MC_tree = df_MC_tree.Define("charge_flip_SF", "chargeflip_sf(OPS_kinematic_region,1,OPS_genOS,"+str(shift)+")")
     else:
       df_MC_tree = df_MC_tree.Define("charge_flip_SF", "1.")
 
@@ -133,8 +133,8 @@ def select_MC_event(df_MC_tree, add_trigger_SF, add_chargeflip_SF, shift, filter
     df_MC_tree = df_MC_tree.Define("trigger_SF", "trigger_sf_ee(ttc_l1_pt, ttc_l2_pt, ttc_l1_eta, ttc_l2_eta)")
     df_MC_tree = df_MC_tree.Define("ttc_kinematic_region","kinematic(ttc_l1_pt, ttc_l2_pt, ttc_l1_eta, ttc_l2_eta)")
     df_MC_tree = df_MC_tree.Define("eeID_SF", "eleID_sf_ee(ttc_l1_pt, ttc_l2_pt, ttc_l2_eta, ttc_l2_eta)")
-    if(add_chargeflip_SF and not "TTTo1L" in process):
-      df_MC_tree = df_MC_tree.Define("charge_flip_SF", "chargeflip_sf(ttc_kinematic_region,1,1,"+str(shift)+")")
+    if(add_chargeflip_SF):
+      df_MC_tree = df_MC_tree.Define("charge_flip_SF", "chargeflip_sf(ttc_kinematic_region,0,ttc_genOS,"+str(shift)+")")
     else:
       df_MC_tree = df_MC_tree.Define("charge_flip_SF", "1.")
 
